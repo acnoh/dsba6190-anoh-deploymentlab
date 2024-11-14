@@ -52,11 +52,11 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_mssql_server" "sqlsrvr" {
-  name                = "sqlsrvr-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
-  version             = "12.0"
-  administrator_login  = "4dm1n157r470r"
+  name                         = "sqlsrvr-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
+  resource_group_name          = azurerm_resource_group.rg.name
+  location                     = azurerm_resource_group.rg.location
+  version                      = "12.0"
+  administrator_login          = "4dm1n157r470r"
   administrator_login_password = "4-v3ry-53cr37-p455w0rd"
 
   tags = local.tags
