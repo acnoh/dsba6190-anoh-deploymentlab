@@ -51,6 +51,8 @@ resource "azurerm_subnet" "subnet" {
 
 }
 
+// SQL Server
+
 resource "azurerm_mssql_server" "sqlsrvr" {
   name                         = "sqlsrvr-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
   resource_group_name          = azurerm_resource_group.rg.name
@@ -71,7 +73,7 @@ resource "azurerm_mssql_virtual_network_rule" "sqlsrvr_vnet" {
 // Storage Account
 
 resource "azurerm_storage_account" "storage" {
-  name                     = "sto${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}"
+  name                     = "sto-${var.class_name}-${var.student_name}-${var.environment}-${random_integer.deployment_id_suffix.result}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
@@ -80,3 +82,8 @@ resource "azurerm_storage_account" "storage" {
   tags = local.tags
 }
 
+resource "azurerm_storage_account_virtual_network_rule" "sto_vnet" {
+  name = "sto_vnet-${var.class_name}-${var.student_name}-${var.environment}-${var.location}-${random_integer.deployment_id_suffix.result}"
+  server_id = azurerm_storage_account.storage.id
+  subnet_id = azurerm_subnet.subnet.id
+}
